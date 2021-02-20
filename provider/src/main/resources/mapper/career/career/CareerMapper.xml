@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.career.mapper.CareerMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.career.entity.Career">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="studentNo" jdbcType="VARCHAR" property="studentNo" />
+      <id column="timePoint" jdbcType="TIMESTAMP" property="timePoint" />
+      <id column="eventTitle" jdbcType="VARCHAR" property="eventTitle" />
+      <id column="event" jdbcType="VARCHAR" property="event" />
+      <id column="eventType" jdbcType="INTEGER" property="eventType" />
+      <id column="remarks" jdbcType="VARCHAR" property="remarks" />
+      <id column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+      <id column="status" jdbcType="TINYINT" property="status" />
+      <id column="deleteFlag" jdbcType="TINYINT" property="deleteFlag" />
+      <id column="creatorld" jdbcType="BIGINT" property="creatorld" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      studentNo, timePoint, eventTitle, event, eventType, remarks, createtime, status, deleteFlag, creatorld
+  </sql>
+    <select id="selectPageInfo" resultType="com.heaboy.service.career.entity.CareerVo">
+        select
+        t_career.*,t_student.studentName,t_class_name.className,t_class_name.classNo
+        from t_career,t_student,t_class_name,t_class_course_rule
+        where t_career.studentNo = t_student.studentNo
+        and t_student.classNo = t_class_course_rule.classNo
+        and t_student.classNo = t_class_name.classNo
+        and t_class_course_rule.teachersNos like concat('%',#{userName},'%')
+        <if test="career.studentNo != null and career.studentNo != ''">
+            and t_career.studentNo = #{career.studentNo}
+        </if>
+        <if test="career.eventType != null">
+            and t_career.eventType = #{career.eventType}
+        </if>
+        and t_career.deleteFlag = 0
+    </select>
+
+    <update id="updateDeleteFlagById">
+        update t_career set deleteFlag = #{deleteFlagYes} where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_career
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_career
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.career.entity.Career">
+    insert into t_career (studentNo, timePoint, eventTitle, event, eventType, remarks, createtime, status, deleteFlag, creatorld, create_Time)
+    values (
+         #{studentNo,jdbcType=VARCHAR},
+         #{timePoint,jdbcType=TIMESTAMP},
+         #{eventTitle,jdbcType=VARCHAR},
+         #{event,jdbcType=VARCHAR},
+         #{eventType,jdbcType=INTEGER},
+         #{remarks,jdbcType=VARCHAR},
+         #{createtime,jdbcType=TIMESTAMP},
+         #{status,jdbcType=TINYINT},
+         #{deleteFlag,jdbcType=TINYINT},
+         #{creatorld,jdbcType=BIGINT}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.career.entity.Career">
+    insert into t_career
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        studentNo,
+      </if>
+      <if test="timePoint != null">
+        timePoint,
+      </if>
+      <if test="eventTitle != null">
+        eventTitle,
+      </if>
+      <if test="event != null">
+        event,
+      </if>
+      <if test="eventType != null">
+        eventType,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="creatorld != null">
+        creatorld,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="studentNo != null">
+       #{studentNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="timePoint != null">
+       #{timePoint,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="eventTitle != null">
+       #{eventTitle,jdbcType=VARCHAR},
+      </if>
+
+      <if test="event != null">
+       #{event,jdbcType=VARCHAR},
+      </if>
+
+      <if test="eventType != null">
+       #{eventType,jdbcType=INTEGER},
+      </if>
+
+      <if test="remarks != null">
+       #{remarks,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createtime != null">
+       #{createtime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="status != null">
+       #{status,jdbcType=TINYINT},
+      </if>
+
+      <if test="deleteFlag != null">
+       #{deleteFlag,jdbcType=TINYINT},
+      </if>
+
+      <if test="creatorld != null">
+       #{creatorld,jdbcType=BIGINT},
+      </if>
+
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.career.entity.Career">
+    update t_career
+    <set>
+       <if test="studentNo != null">
+         studentNo = #{studentNo,jdbcType=VARCHAR},
+      </if>
+       <if test="timePoint != null">
+         timePoint = #{timePoint,jdbcType=TIMESTAMP},
+      </if>
+       <if test="eventTitle != null">
+         eventTitle = #{eventTitle,jdbcType=VARCHAR},
+      </if>
+       <if test="event != null">
+         event = #{event,jdbcType=VARCHAR},
+      </if>
+       <if test="eventType != null">
+         eventType = #{eventType,jdbcType=INTEGER},
+      </if>
+       <if test="remarks != null">
+         remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+       <if test="createtime != null">
+         createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="status != null">
+         status = #{status,jdbcType=TINYINT},
+      </if>
+       <if test="deleteFlag != null">
+         deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+      </if>
+       <if test="creatorld != null">
+         creatorld = #{creatorld,jdbcType=BIGINT},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.career.entity.Career">
+    update t_career
+    set
+        studentNo = #{studentNo,jdbcType=VARCHAR},
+        timePoint = #{timePoint,jdbcType=TIMESTAMP},
+        eventTitle = #{eventTitle,jdbcType=VARCHAR},
+        event = #{event,jdbcType=VARCHAR},
+        eventType = #{eventType,jdbcType=INTEGER},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=TINYINT},
+        deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+        creatorld = #{creatorld,jdbcType=BIGINT}
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.notice.mapper.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.notice.entity.Notice">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="publisherld" jdbcType="VARCHAR" property="publisherld" />
+      <id column="author" jdbcType="VARCHAR" property="author" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+      <id column="type" jdbcType="INTEGER" property="type" />
+      <id column="isTop" jdbcType="TINYINT" property="isTop" />
+      <id column="isHot" jdbcType="TINYINT" property="isHot" />
+      <id column="contentTitle" jdbcType="VARCHAR" property="contentTitle" />
+      <id column="contentText" jdbcType="VARCHAR" property="contentText" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      publisherld, author, createTime, type, isTop, isHot, contentTitle, contentText
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_notice
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_notice
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.notice.entity.Notice">
+    insert into t_notice (publisherld, author, createTime, type, isTop, isHot, contentTitle, contentText)
+    values (
+         #{publisherld,jdbcType=VARCHAR},
+         #{author,jdbcType=VARCHAR},
+         #{createTime,jdbcType=TIMESTAMP},
+         #{type,jdbcType=INTEGER},
+         #{isTop,jdbcType=TINYBLOB},
+         #{isHot,jdbcType=TINYBLOB},
+         #{contentTitle,jdbcType=VARCHAR},
+        #{contentText,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.notice.entity.Notice">
+    insert into t_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="publisherld != null">
+        publisherld,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isTop != null">
+        isTop,
+      </if>
+      <if test="isHot != null">
+        isHot,
+      </if>
+      <if test="contentTitle != null">
+        contentTitle,
+      </if>
+      <if test="contentText != null">
+        contentText,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="publisherld != null">
+       #{publisherld,jdbcType=VARCHAR},
+      </if>
+
+      <if test="author != null">
+       #{author,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="type != null">
+       #{type,jdbcType=INTEGER},
+      </if>
+
+      <if test="isTop != null">
+       #{isTop,jdbcType=TINYBLOB},
+      </if>
+
+      <if test="isHot != null">
+       #{isHot,jdbcType=TINYBLOB},
+      </if>
+
+      <if test="contentTitle != null">
+       #{contentTitle,jdbcType=VARCHAR},
+      </if>
+
+      <if test="contentText != null">
+       #{contentText,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.notice.entity.Notice">
+    update t_notice
+    <set>
+       <if test="publisherld != null">
+         publisherld = #{publisherld,jdbcType=VARCHAR},
+      </if>
+       <if test="author != null">
+         author = #{author,jdbcType=VARCHAR},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="type != null">
+         type = #{type,jdbcType=INTEGER},
+      </if>
+       <if test="isTop != null">
+         isTop = #{isTop,jdbcType=TINYBLOB},
+      </if>
+       <if test="isHot != null">
+         isHot = #{isHot,jdbcType=TINYBLOB},
+      </if>
+       <if test="contentTitle != null">
+         contentTitle = #{contentTitle,jdbcType=VARCHAR},
+      </if>
+       <if test="contentText != null">
+         contentText = #{contentText,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.notice.entity.Notice">
+    update t_notice
+    set
+        publisherld = #{publisherld,jdbcType=VARCHAR},
+        author = #{author,jdbcType=VARCHAR},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+        type = #{type,jdbcType=INTEGER},
+        isTop = #{isTop,jdbcType=TINYBLOB},
+        isHot = #{isHot,jdbcType=TINYBLOB},
+        contentTitle = #{contentTitle,jdbcType=VARCHAR},
+        contentText = #{contentText,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

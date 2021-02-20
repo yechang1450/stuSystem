@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.questionnaire.mapper.QuestionnaireMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.questionnaire.entity.Questionnaire">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="questionarieId" jdbcType="BIGINT" property="questionarieId" />
+      <id column="questionarieTitle" jdbcType="VARCHAR" property="questionarieTitle" />
+      <id column="startTime" jdbcType="TIMESTAMP" property="startTime" />
+      <id column="endTime" jdbcType="TIMESTAMP" property="endTime" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      questionarieId, questionarieTitle, startTime, endTime, creatorId, createTime
+  </sql>
+
+    <select id="updateByid" resultType="int" parameterType="com.heaboy.service.questionnaire.entity.Questionnaire">
+        update t_questionnaire
+        set
+        questionarieTitle = #{questionarieTitle,jdbcType=VARCHAR},
+        startTime = #{startTime,jdbcType=TIMESTAMP},
+        endTime = #{endTime,jdbcType=TIMESTAMP},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+        where questionarieId=#{questionarieId,jdbcType=BIGINT}
+    </select>
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+
+    <select id="selectQuestionnaireById" resultMap="BaseResultMap">
+        select * from t_questionnaire where questionarieId = #{questionnaireId}
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_questionnaire
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_questionnaire
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.questionnaire.entity.Questionnaire">
+    insert into t_questionnaire (questionarieId, questionarieTitle, startTime, endTime, creatorId, createTime)
+    values (
+         #{questionarieId,jdbcType=BIGINT},
+         #{questionarieTitle,jdbcType=VARCHAR},
+         #{startTime,jdbcType=TIMESTAMP},
+         #{endTime,jdbcType=TIMESTAMP},
+         #{creatorId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.questionnaire.entity.Questionnaire">
+    insert into t_questionnaire
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionarieId != null">
+        questionarieId,
+      </if>
+      <if test="questionarieTitle != null">
+        questionarieTitle,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="questionarieId != null">
+       #{questionarieId,jdbcType=BIGINT},
+      </if>
+
+      <if test="questionarieTitle != null">
+       #{questionarieTitle,jdbcType=VARCHAR},
+      </if>
+
+      <if test="startTime != null">
+       #{startTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="endTime != null">
+       #{endTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.questionnaire.entity.Questionnaire">
+    update t_questionnaire
+    <set>
+       <if test="questionarieId != null">
+         questionarieId = #{questionarieId,jdbcType=BIGINT},
+      </if>
+       <if test="questionarieTitle != null">
+         questionarieTitle = #{questionarieTitle,jdbcType=VARCHAR},
+      </if>
+       <if test="startTime != null">
+         startTime = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="endTime != null">
+         endTime = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.questionnaire.entity.Questionnaire">
+    update t_questionnaire
+    set
+        questionarieId = #{questionarieId,jdbcType=BIGINT},
+        questionarieTitle = #{questionarieTitle,jdbcType=VARCHAR},
+        startTime = #{startTime,jdbcType=TIMESTAMP},
+        endTime = #{endTime,jdbcType=TIMESTAMP},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

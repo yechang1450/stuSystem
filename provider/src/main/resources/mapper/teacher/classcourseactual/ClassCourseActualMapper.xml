@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.teacher.mapper.ClassCourseActualMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.teacher.entity.ClassCourseActual">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="teacherNoActual" jdbcType="VARCHAR" property="teacherNoActual" />
+      <id column="classCourseRulesId" jdbcType="BIGINT" property="classCourseRulesId" />
+      <id column="classCourseId" jdbcType="BIGINT" property="classCourseId" />
+      <id column="classNo" jdbcType="VARCHAR" property="classNo" />
+      <id column="courseNo" jdbcType="VARCHAR" property="courseNo" />
+      <id column="startTime" jdbcType="TIMESTAMP" property="startTime" />
+      <id column="endTIme" jdbcType="TIMESTAMP" property="endTIme" />
+      <id column="courseContent" jdbcType="VARCHAR" property="courseContent" />
+      <id column="preview" jdbcType="VARCHAR" property="preview" />
+      <id column="homework" jdbcType="VARCHAR" property="homework" />
+      <id column="deleteFlag" jdbcType="TINYINT" property="deleteFlag" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      teacherNoActual, classCourseRulesId, classCourseId, classNo, courseNo, startTime, endTIme, courseContent, preview, homework, deleteFlag, creatorId, createTime
+  </sql>
+    <select id="selectPageInfo" resultType="com.heaboy.service.teacher.entity.ClassCourseActualVo">
+        select
+            tcca.*,
+            tccr.sectionNum,
+            tccr.weekNum,
+            tt.teacherName,
+            tcn.className,
+            tc.courseName
+        from
+            t_class_course_actual tcca,
+            t_class_course_rule tccr,
+            t_teacher tt,
+            t_course tc,
+            t_class_name tcn
+        where
+                tcca.teacherNoActual = #{userName}
+            AND tcca.classCourseRulesId = tccr.id
+            AND tcca.classNo = tcn.classNo
+            AND tcca.courseNo = tc.courseNo
+            AND tcca.teacherNoActual = tt.teacherNo
+            <if test="courseActual.classNo != null and courseActual.classNo != ''">
+                AND tcca.classNo = #{courseActual.classNo}
+            </if>
+            <if test="courseActual.courseNo != null and courseActual.courseNo != ''">
+                AND tcca.courseNo = #{courseActual.courseNo}
+            </if>
+            AND tcca.deleteFlag = 0
+            AND tccr.deleteFlag = 0
+            AND tcn.deleteFlag = 0
+            AND tt.deleteFlag = 0
+            AND tt.status &lt;&gt; 1
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_class_course_actual
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_class_course_actual
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.teacher.entity.ClassCourseActual">
+    insert into t_class_course_actual (teacherNoActual, classCourseRulesId, classCourseId, classNo, courseNo, startTime, endTIme, courseContent, preview, homework, deleteFlag, creatorId, createTime)
+    values (
+         #{teacherNoActual,jdbcType=VARCHAR},
+         #{classCourseRulesId,jdbcType=BIGINT},
+         #{classCourseId,jdbcType=BIGINT},
+         #{classNo,jdbcType=VARCHAR},
+         #{courseNo,jdbcType=VARCHAR},
+         #{startTime,jdbcType=TIMESTAMP},
+         #{endTIme,jdbcType=TIMESTAMP},
+         #{courseContent,jdbcType=VARCHAR},
+         #{preview,jdbcType=VARCHAR},
+         #{homework,jdbcType=VARCHAR},
+         #{deleteFlag,jdbcType=TINYINT},
+         #{creatorId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.teacher.entity.ClassCourseActual">
+    insert into t_class_course_actual
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="teacherNoActual != null">
+        teacherNoActual,
+      </if>
+      <if test="classCourseRulesId != null">
+        classCourseRulesId,
+      </if>
+      <if test="classCourseId != null">
+        classCourseId,
+      </if>
+      <if test="classNo != null">
+        classNo,
+      </if>
+      <if test="courseNo != null">
+        courseNo,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTIme != null">
+        endTIme,
+      </if>
+      <if test="courseContent != null">
+        courseContent,
+      </if>
+      <if test="preview != null">
+        preview,
+      </if>
+      <if test="homework != null">
+        homework,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="teacherNoActual != null">
+       #{teacherNoActual,jdbcType=VARCHAR},
+      </if>
+
+      <if test="classCourseRulesId != null">
+       #{classCourseRulesId,jdbcType=BIGINT},
+      </if>
+
+      <if test="classCourseId != null">
+       #{classCourseId,jdbcType=BIGINT},
+      </if>
+
+      <if test="classNo != null">
+       #{classNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="courseNo != null">
+       #{courseNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="startTime != null">
+       #{startTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="endTIme != null">
+       #{endTIme,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="courseContent != null">
+       #{courseContent,jdbcType=VARCHAR},
+      </if>
+
+      <if test="preview != null">
+       #{preview,jdbcType=VARCHAR},
+      </if>
+
+      <if test="homework != null">
+       #{homework,jdbcType=VARCHAR},
+      </if>
+
+      <if test="deleteFlag != null">
+       #{deleteFlag,jdbcType=TINYINT},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.teacher.entity.ClassCourseActual">
+    update t_class_course_actual
+    <set>
+       <if test="teacherNoActual != null">
+         teacherNoActual = #{teacherNoActual,jdbcType=VARCHAR},
+      </if>
+       <if test="classCourseRulesId != null">
+         classCourseRulesId = #{classCourseRulesId,jdbcType=BIGINT},
+      </if>
+       <if test="classCourseId != null">
+         classCourseId = #{classCourseId,jdbcType=BIGINT},
+      </if>
+       <if test="classNo != null">
+         classNo = #{classNo,jdbcType=VARCHAR},
+      </if>
+       <if test="courseNo != null">
+         courseNo = #{courseNo,jdbcType=VARCHAR},
+      </if>
+       <if test="startTime != null">
+         startTime = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="endTIme != null">
+         endTIme = #{endTIme,jdbcType=TIMESTAMP},
+      </if>
+       <if test="courseContent != null">
+         courseContent = #{courseContent,jdbcType=VARCHAR},
+      </if>
+       <if test="preview != null">
+         preview = #{preview,jdbcType=VARCHAR},
+      </if>
+       <if test="homework != null">
+         homework = #{homework,jdbcType=VARCHAR},
+      </if>
+       <if test="deleteFlag != null">
+         deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.teacher.entity.ClassCourseActual">
+    update t_class_course_actual
+    set
+        teacherNoActual = #{teacherNoActual,jdbcType=VARCHAR},
+        classCourseRulesId = #{classCourseRulesId,jdbcType=BIGINT},
+        classCourseId = #{classCourseId,jdbcType=BIGINT},
+        classNo = #{classNo,jdbcType=VARCHAR},
+        courseNo = #{courseNo,jdbcType=VARCHAR},
+        startTime = #{startTime,jdbcType=TIMESTAMP},
+        endTIme = #{endTIme,jdbcType=TIMESTAMP},
+        courseContent = #{courseContent,jdbcType=VARCHAR},
+        preview = #{preview,jdbcType=VARCHAR},
+        homework = #{homework,jdbcType=VARCHAR},
+        deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

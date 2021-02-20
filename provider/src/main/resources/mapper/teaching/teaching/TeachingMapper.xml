@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.teaching.mapper.TeachingMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.teaching.entity.Teaching">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="classId" jdbcType="INTEGER" property="classId" />
+      <id column="subjectId" jdbcType="INTEGER" property="subjectId" />
+      <id column="teacherId" jdbcType="INTEGER" property="teacherId" />
+      <id column="modelId" jdbcType="INTEGER" property="modelId" />
+      <id column="teacherTotalScore" jdbcType="DOUBLE" property="teacherTotalScore" />
+      <id column="status" jdbcType="VARCHAR" property="status" />
+      <id column="teachingStartTime" jdbcType="TIMESTAMP" property="teachingStartTime" />
+      <id column="teachingEndTime" jdbcType="TIMESTAMP" property="teachingEndTime" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="creator" jdbcType="VARCHAR" property="creator" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      classId, subjectId, teacherId, modelId, teacherTotalScore, status, teachingStartTime, teachingEndTime, creatorId, creator, createTime
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_teaching
+       where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_teaching
+       where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.teaching.entity.Teaching">
+    insert into t_teaching (classId, subjectId, teacherId, modelId, teacherTotalScore, status, teachingStartTime, teachingEndTime, creatorId, creator, createTime)
+    values (
+         #{classId,jdbcType=INTEGER},
+         #{subjectId,jdbcType=INTEGER},
+         #{teacherId,jdbcType=INTEGER},
+         #{modelId,jdbcType=INTEGER},
+         #{teacherTotalScore,jdbcType=DOUBLE},
+         #{status,jdbcType=VARCHAR},
+         #{teachingStartTime,jdbcType=TIMESTAMP},
+         #{teachingEndTime,jdbcType=TIMESTAMP},
+         #{creatorId,jdbcType=BIGINT},
+         #{creator,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.teaching.entity.Teaching">
+    insert into t_teaching
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        classId,
+      </if>
+      <if test="subjectId != null">
+        subjectId,
+      </if>
+      <if test="teacherId != null">
+        teacherId,
+      </if>
+      <if test="modelId != null">
+        modelId,
+      </if>
+      <if test="teacherTotalScore != null">
+        teacherTotalScore,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="teachingStartTime != null">
+        teachingStartTime,
+      </if>
+      <if test="teachingEndTime != null">
+        teachingEndTime,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="classId != null">
+       #{classId,jdbcType=INTEGER},
+      </if>
+
+      <if test="subjectId != null">
+       #{subjectId,jdbcType=INTEGER},
+      </if>
+
+      <if test="teacherId != null">
+       #{teacherId,jdbcType=INTEGER},
+      </if>
+
+      <if test="modelId != null">
+       #{modelId,jdbcType=INTEGER},
+      </if>
+
+      <if test="teacherTotalScore != null">
+       #{teacherTotalScore,jdbcType=DOUBLE},
+      </if>
+
+      <if test="status != null">
+       #{status,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachingStartTime != null">
+       #{teachingStartTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="teachingEndTime != null">
+       #{teachingEndTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="creator != null">
+       #{creator,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.teaching.entity.Teaching">
+    update t_teaching
+    <set>
+       <if test="classId != null">
+         classId = #{classId,jdbcType=INTEGER},
+      </if>
+       <if test="subjectId != null">
+         subjectId = #{subjectId,jdbcType=INTEGER},
+      </if>
+       <if test="teacherId != null">
+         teacherId = #{teacherId,jdbcType=INTEGER},
+      </if>
+       <if test="modelId != null">
+         modelId = #{modelId,jdbcType=INTEGER},
+      </if>
+       <if test="teacherTotalScore != null">
+         teacherTotalScore = #{teacherTotalScore,jdbcType=DOUBLE},
+      </if>
+       <if test="status != null">
+         status = #{status,jdbcType=VARCHAR},
+      </if>
+       <if test="teachingStartTime != null">
+         teachingStartTime = #{teachingStartTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="teachingEndTime != null">
+         teachingEndTime = #{teachingEndTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="creator != null">
+         creator = #{creator,jdbcType=VARCHAR},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.teaching.entity.Teaching">
+    update t_teaching
+    set
+        classId = #{classId,jdbcType=INTEGER},
+        subjectId = #{subjectId,jdbcType=INTEGER},
+        teacherId = #{teacherId,jdbcType=INTEGER},
+        modelId = #{modelId,jdbcType=INTEGER},
+        teacherTotalScore = #{teacherTotalScore,jdbcType=DOUBLE},
+        status = #{status,jdbcType=VARCHAR},
+        teachingStartTime = #{teachingStartTime,jdbcType=TIMESTAMP},
+        teachingEndTime = #{teachingEndTime,jdbcType=TIMESTAMP},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        creator = #{creator,jdbcType=VARCHAR},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+</mapper>

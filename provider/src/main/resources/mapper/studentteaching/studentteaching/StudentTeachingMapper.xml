@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.studentteaching.mapper.StudentTeachingMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.studentteaching.entity.StudentTeaching">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="studentNo" jdbcType="VARCHAR" property="studentNo" />
+      <id column="teachingId" jdbcType="INTEGER" property="teachingId" />
+      <id column="teachingModelId" jdbcType="INTEGER" property="teachingModelId" />
+      <id column="teachingFraction" jdbcType="VARCHAR" property="teachingFraction" />
+      <id column="teachingContent" jdbcType="VARCHAR" property="teachingContent" />
+      <id column="teachingTime" jdbcType="TIMESTAMP" property="teachingTime" />
+      <id column="whetherRead" jdbcType="VARCHAR" property="whetherRead" />
+      <id column="teachingType" jdbcType="VARCHAR" property="teachingType" />
+      <id column="subjectId" jdbcType="INTEGER" property="subjectId" />
+      <id column="teacherId" jdbcType="INTEGER" property="teacherId" />
+      <id column="classId" jdbcType="INTEGER" property="classId" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      studentNo, teachingId, teachingModelId, teachingFraction, teachingContent, teachingTime, whetherRead, teachingType, subjectId, teacherId, classId
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student_teaching
+       where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_student_teaching
+       where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.studentteaching.entity.StudentTeaching">
+    insert into t_student_teaching (studentNo, teachingId, teachingModelId, teachingFraction, teachingContent, teachingTime, whetherRead, teachingType, subjectId, teacherId, classId)
+    values (
+         #{studentNo,jdbcType=VARCHAR},
+         #{teachingId,jdbcType=INTEGER},
+         #{teachingModelId,jdbcType=INTEGER},
+         #{teachingFraction,jdbcType=VARCHAR},
+         #{teachingContent,jdbcType=VARCHAR},
+         #{teachingTime,jdbcType=TIMESTAMP},
+         #{whetherRead,jdbcType=VARCHAR},
+         #{teachingType,jdbcType=VARCHAR},
+         #{subjectId,jdbcType=INTEGER},
+         #{teacherId,jdbcType=INTEGER},
+        #{classId,jdbcType=INTEGER}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.studentteaching.entity.StudentTeaching">
+    insert into t_student_teaching
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        studentNo,
+      </if>
+      <if test="teachingId != null">
+        teachingId,
+      </if>
+      <if test="teachingModelId != null">
+        teachingModelId,
+      </if>
+      <if test="teachingFraction != null">
+        teachingFraction,
+      </if>
+      <if test="teachingContent != null">
+        teachingContent,
+      </if>
+      <if test="teachingTime != null">
+        teachingTime,
+      </if>
+      <if test="whetherRead != null">
+        whetherRead,
+      </if>
+      <if test="teachingType != null">
+        teachingType,
+      </if>
+      <if test="subjectId != null">
+        subjectId,
+      </if>
+      <if test="teacherId != null">
+        teacherId,
+      </if>
+      <if test="classId != null">
+        classId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="studentNo != null">
+       #{studentNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachingId != null">
+       #{teachingId,jdbcType=INTEGER},
+      </if>
+
+      <if test="teachingModelId != null">
+       #{teachingModelId,jdbcType=INTEGER},
+      </if>
+
+      <if test="teachingFraction != null">
+       #{teachingFraction,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachingContent != null">
+       #{teachingContent,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachingTime != null">
+       #{teachingTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="whetherRead != null">
+       #{whetherRead,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachingType != null">
+       #{teachingType,jdbcType=VARCHAR},
+      </if>
+
+      <if test="subjectId != null">
+       #{subjectId,jdbcType=INTEGER},
+      </if>
+
+      <if test="teacherId != null">
+       #{teacherId,jdbcType=INTEGER},
+      </if>
+
+      <if test="classId != null">
+       #{classId,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.studentteaching.entity.StudentTeaching">
+    update t_student_teaching
+    <set>
+       <if test="studentNo != null">
+         studentNo = #{studentNo,jdbcType=VARCHAR},
+      </if>
+       <if test="teachingId != null">
+         teachingId = #{teachingId,jdbcType=INTEGER},
+      </if>
+       <if test="teachingModelId != null">
+         teachingModelId = #{teachingModelId,jdbcType=INTEGER},
+      </if>
+       <if test="teachingFraction != null">
+         teachingFraction = #{teachingFraction,jdbcType=VARCHAR},
+      </if>
+       <if test="teachingContent != null">
+         teachingContent = #{teachingContent,jdbcType=VARCHAR},
+      </if>
+       <if test="teachingTime != null">
+         teachingTime = #{teachingTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="whetherRead != null">
+         whetherRead = #{whetherRead,jdbcType=VARCHAR},
+      </if>
+       <if test="teachingType != null">
+         teachingType = #{teachingType,jdbcType=VARCHAR},
+      </if>
+       <if test="subjectId != null">
+         subjectId = #{subjectId,jdbcType=INTEGER},
+      </if>
+       <if test="teacherId != null">
+         teacherId = #{teacherId,jdbcType=INTEGER},
+      </if>
+       <if test="classId != null">
+         classId = #{classId,jdbcType=INTEGER},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.studentteaching.entity.StudentTeaching">
+    update t_student_teaching
+    set
+        studentNo = #{studentNo,jdbcType=VARCHAR},
+        teachingId = #{teachingId,jdbcType=INTEGER},
+        teachingModelId = #{teachingModelId,jdbcType=INTEGER},
+        teachingFraction = #{teachingFraction,jdbcType=VARCHAR},
+        teachingContent = #{teachingContent,jdbcType=VARCHAR},
+        teachingTime = #{teachingTime,jdbcType=TIMESTAMP},
+        whetherRead = #{whetherRead,jdbcType=VARCHAR},
+        teachingType = #{teachingType,jdbcType=VARCHAR},
+        subjectId = #{subjectId,jdbcType=INTEGER},
+        teacherId = #{teacherId,jdbcType=INTEGER},
+        classId = #{classId,jdbcType=INTEGER},
+
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+</mapper>

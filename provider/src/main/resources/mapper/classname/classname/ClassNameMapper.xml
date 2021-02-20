@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.classname.mapper.ClassNameMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.classname.entity.ClassName">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="classNo" jdbcType="VARCHAR" property="classNo" />
+      <id column="className" jdbcType="VARCHAR" property="className" />
+      <id column="type" jdbcType="VARCHAR" property="type" />
+      <id column="headTeacherId" jdbcType="VARCHAR" property="headTeacherId" />
+      <id column="headTeacherName" jdbcType="VARCHAR" property="headTeacherName" />
+      <id column="isGraduation" jdbcType="TINYINT" property="isGraduation" />
+      <id column="stageId" jdbcType="BIGINT" property="stageId" />
+      <id column="studentNumber" jdbcType="INTEGER" property="studentNumber" />
+      <id column="qqGroupNumber" jdbcType="VARCHAR" property="qqGroupNumber" />
+      <id column="qqGroup" jdbcType="VARCHAR" property="qqGroup" />
+      <id column="wechatGroup" jdbcType="VARCHAR" property="wechatGroup" />
+      <id column="deleteFlag" jdbcType="TINYINT" property="deleteFlag" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+      <id column="creater" jdbcType="VARCHAR" property="creater" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      classNo, className, type, headTeacherId, headTeacherName, isGraduation, stageId, studentNumber, qqGroupNumber, qqGroup, wechatGroup, deleteFlag, creatorId, createTime, creater
+  </sql>
+    <select id="selectByTeacherNo" resultType="com.heaboy.service.classname.entity.ClassName">
+        select distinct
+            tcn.classNo,tcn.className
+        from
+            t_class_name tcn,t_class_course_rule tccr
+        where
+            tcn.classNo = tccr.classNo
+        and tccr.teachersNos like concat('%',#{TeacherNo},'%')
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_class_name
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_class_name
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.classname.entity.ClassName">
+    insert into t_class_name (classNo, className, type, headTeacherId, headTeacherName, isGraduation, stageId, studentNumber, qqGroupNumber, qqGroup, wechatGroup, deleteFlag, creatorId, createTime, creater)
+    values (
+         #{classNo,jdbcType=VARCHAR},
+         #{className,jdbcType=VARCHAR},
+         #{type,jdbcType=VARCHAR},
+         #{headTeacherId,jdbcType=VARCHAR},
+         #{headTeacherName,jdbcType=VARCHAR},
+         #{isGraduation,jdbcType=TINYINT},
+         #{stageId,jdbcType=BIGINT},
+         #{studentNumber,jdbcType=INTEGER},
+         #{qqGroupNumber,jdbcType=VARCHAR},
+         #{qqGroup,jdbcType=VARCHAR},
+         #{wechatGroup,jdbcType=VARCHAR},
+         #{deleteFlag,jdbcType=TINYINT},
+         #{creatorId,jdbcType=BIGINT},
+         #{createTime,jdbcType=TIMESTAMP},
+        #{creater,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.classname.entity.ClassName">
+    insert into t_class_name
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classNo != null">
+        classNo,
+      </if>
+      <if test="className != null">
+        className,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="headTeacherId != null">
+        headTeacherId,
+      </if>
+      <if test="headTeacherName != null">
+        headTeacherName,
+      </if>
+      <if test="isGraduation != null">
+        isGraduation,
+      </if>
+      <if test="stageId != null">
+        stageId,
+      </if>
+      <if test="studentNumber != null">
+        studentNumber,
+      </if>
+      <if test="qqGroupNumber != null">
+        qqGroupNumber,
+      </if>
+      <if test="qqGroup != null">
+        qqGroup,
+      </if>
+      <if test="wechatGroup != null">
+        wechatGroup,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="classNo != null">
+       #{classNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="className != null">
+       #{className,jdbcType=VARCHAR},
+      </if>
+
+      <if test="type != null">
+       #{type,jdbcType=VARCHAR},
+      </if>
+
+      <if test="headTeacherId != null">
+       #{headTeacherId,jdbcType=VARCHAR},
+      </if>
+
+      <if test="headTeacherName != null">
+       #{headTeacherName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="isGraduation != null">
+       #{isGraduation,jdbcType=TINYINT},
+      </if>
+
+      <if test="stageId != null">
+       #{stageId,jdbcType=BIGINT},
+      </if>
+
+      <if test="studentNumber != null">
+       #{studentNumber,jdbcType=INTEGER},
+      </if>
+
+      <if test="qqGroupNumber != null">
+       #{qqGroupNumber,jdbcType=VARCHAR},
+      </if>
+
+      <if test="qqGroup != null">
+       #{qqGroup,jdbcType=VARCHAR},
+      </if>
+
+      <if test="wechatGroup != null">
+       #{wechatGroup,jdbcType=VARCHAR},
+      </if>
+
+      <if test="deleteFlag != null">
+       #{deleteFlag,jdbcType=TINYINT},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="creater != null">
+       #{creater,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.classname.entity.ClassName">
+    update t_class_name
+    <set>
+       <if test="classNo != null">
+         classNo = #{classNo,jdbcType=VARCHAR},
+      </if>
+       <if test="className != null">
+         className = #{className,jdbcType=VARCHAR},
+      </if>
+       <if test="type != null">
+         type = #{type,jdbcType=VARCHAR},
+      </if>
+       <if test="headTeacherId != null">
+         headTeacherId = #{headTeacherId,jdbcType=VARCHAR},
+      </if>
+       <if test="headTeacherName != null">
+         headTeacherName = #{headTeacherName,jdbcType=VARCHAR},
+      </if>
+       <if test="isGraduation != null">
+         isGraduation = #{isGraduation,jdbcType=TINYINT},
+      </if>
+       <if test="stageId != null">
+         stageId = #{stageId,jdbcType=BIGINT},
+      </if>
+       <if test="studentNumber != null">
+         studentNumber = #{studentNumber,jdbcType=INTEGER},
+      </if>
+       <if test="qqGroupNumber != null">
+         qqGroupNumber = #{qqGroupNumber,jdbcType=VARCHAR},
+      </if>
+       <if test="qqGroup != null">
+         qqGroup = #{qqGroup,jdbcType=VARCHAR},
+      </if>
+       <if test="wechatGroup != null">
+         wechatGroup = #{wechatGroup,jdbcType=VARCHAR},
+      </if>
+       <if test="deleteFlag != null">
+         deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="creater != null">
+         creater = #{creater,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.classname.entity.ClassName">
+    update t_class_name
+    set
+        classNo = #{classNo,jdbcType=VARCHAR},
+        className = #{className,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        headTeacherId = #{headTeacherId,jdbcType=VARCHAR},
+        headTeacherName = #{headTeacherName,jdbcType=VARCHAR},
+        isGraduation = #{isGraduation,jdbcType=TINYINT},
+        stageId = #{stageId,jdbcType=BIGINT},
+        studentNumber = #{studentNumber,jdbcType=INTEGER},
+        qqGroupNumber = #{qqGroupNumber,jdbcType=VARCHAR},
+        qqGroup = #{qqGroup,jdbcType=VARCHAR},
+        wechatGroup = #{wechatGroup,jdbcType=VARCHAR},
+        deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+        creater = #{creater,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

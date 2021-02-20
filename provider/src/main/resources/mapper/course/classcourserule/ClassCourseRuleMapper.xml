@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.course.mapper.ClassCourseRuleMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.course.entity.ClassCourseRule">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="classCourseId" jdbcType="BIGINT" property="classCourseId" />
+      <id column="startTime" jdbcType="TIMESTAMP" property="startTime" />
+      <id column="endTime" jdbcType="TIMESTAMP" property="endTime" />
+      <id column="sectionNum" jdbcType="INTEGER" property="sectionNum" />
+      <id column="weekNum" jdbcType="INTEGER" property="weekNum" />
+      <id column="status" jdbcType="VARCHAR" property="status" />
+      <id column="deleteFlag" jdbcType="TINYINT" property="deleteFlag" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+      <id column="classNo" jdbcType="VARCHAR" property="classNo" />
+      <id column="teachersNos" jdbcType="VARCHAR" property="teachersNos" />
+      <id column="courseNo" jdbcType="VARCHAR" property="courseNo" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      classCourseId, startTime, endTime, sectionNum, weekNum, status, deleteFlag, creatorId, createTime, classNo, teachersNos, courseNo
+  </sql>
+    <select id="selectCourseByClassNoAndUserName" resultType="com.heaboy.service.course.entity.ClassNameVo">
+        select
+            t_course.courseNo,t_course.courseName
+        from
+            t_class_course_rule,t_course
+        where
+            t_class_course_rule.courseNo = t_course.courseNo
+        and t_class_course_rule.classNo = #{classNo}
+        and t_class_course_rule.teachersNos like concat('%',#{userName},'%')
+    </select>
+    <select id="selectCourseByUserName" resultType="com.heaboy.service.course.entity.ClassNameVo">
+        select
+            t_course.courseNo,t_course.courseName
+        from
+            t_class_course_rule,t_course
+        where
+            t_class_course_rule.courseNo = t_course.courseNo
+        and t_class_course_rule.teachersNos like concat('%',#{userName},'%')
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_class_course_rule
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_class_course_rule
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.course.entity.ClassCourseRule">
+    insert into t_class_course_rule (classCourseId, startTime, endTime, sectionNum, weekNum, status, deleteFlag, creatorId, createTime, classNo, teachersNos, courseNo)
+    values (
+         #{classCourseId,jdbcType=BIGINT},
+         #{startTime,jdbcType=TIMESTAMP},
+         #{endTime,jdbcType=TIMESTAMP},
+         #{sectionNum,jdbcType=INTEGER},
+         #{weekNum,jdbcType=INTEGER},
+         #{status,jdbcType=VARCHAR},
+         #{deleteFlag,jdbcType=TINYINT},
+         #{creatorId,jdbcType=BIGINT},
+         #{createTime,jdbcType=TIMESTAMP},
+         #{classNo,jdbcType=VARCHAR},
+         #{teachersNos,jdbcType=VARCHAR},
+        #{courseNo,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.course.entity.ClassCourseRule">
+    insert into t_class_course_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classCourseId != null">
+        classCourseId,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+      <if test="sectionNum != null">
+        sectionNum,
+      </if>
+      <if test="weekNum != null">
+        weekNum,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="classNo != null">
+        classNo,
+      </if>
+      <if test="teachersNos != null">
+        teachersNos,
+      </if>
+      <if test="courseNo != null">
+        courseNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="classCourseId != null">
+       #{classCourseId,jdbcType=BIGINT},
+      </if>
+
+      <if test="startTime != null">
+       #{startTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="endTime != null">
+       #{endTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="sectionNum != null">
+       #{sectionNum,jdbcType=INTEGER},
+      </if>
+
+      <if test="weekNum != null">
+       #{weekNum,jdbcType=INTEGER},
+      </if>
+
+      <if test="status != null">
+       #{status,jdbcType=VARCHAR},
+      </if>
+
+      <if test="deleteFlag != null">
+       #{deleteFlag,jdbcType=TINYINT},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="classNo != null">
+       #{classNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="teachersNos != null">
+       #{teachersNos,jdbcType=VARCHAR},
+      </if>
+
+      <if test="courseNo != null">
+       #{courseNo,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.course.entity.ClassCourseRule">
+    update t_class_course_rule
+    <set>
+       <if test="classCourseId != null">
+         classCourseId = #{classCourseId,jdbcType=BIGINT},
+      </if>
+       <if test="startTime != null">
+         startTime = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="endTime != null">
+         endTime = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="sectionNum != null">
+         sectionNum = #{sectionNum,jdbcType=INTEGER},
+      </if>
+       <if test="weekNum != null">
+         weekNum = #{weekNum,jdbcType=INTEGER},
+      </if>
+       <if test="status != null">
+         status = #{status,jdbcType=VARCHAR},
+      </if>
+       <if test="deleteFlag != null">
+         deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="classNo != null">
+         classNo = #{classNo,jdbcType=VARCHAR},
+      </if>
+       <if test="teachersNos != null">
+         teachersNos = #{teachersNos,jdbcType=VARCHAR},
+      </if>
+       <if test="courseNo != null">
+         courseNo = #{courseNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.course.entity.ClassCourseRule">
+    update t_class_course_rule
+    set
+        classCourseId = #{classCourseId,jdbcType=BIGINT},
+        startTime = #{startTime,jdbcType=TIMESTAMP},
+        endTime = #{endTime,jdbcType=TIMESTAMP},
+        sectionNum = #{sectionNum,jdbcType=INTEGER},
+        weekNum = #{weekNum,jdbcType=INTEGER},
+        status = #{status,jdbcType=VARCHAR},
+        deleteFlag = #{deleteFlag,jdbcType=TINYINT},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+        classNo = #{classNo,jdbcType=VARCHAR},
+        teachersNos = #{teachersNos,jdbcType=VARCHAR},
+        courseNo = #{courseNo,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

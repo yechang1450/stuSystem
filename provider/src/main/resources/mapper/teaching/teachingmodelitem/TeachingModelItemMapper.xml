@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.teaching.mapper.TeachingModelItemMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.teaching.entity.TeachingModelItem">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="modelItemName" jdbcType="VARCHAR" property="modelItemName" />
+      <id column="modelItemType" jdbcType="VARCHAR" property="modelItemType" />
+      <id column="status" jdbcType="TINYINT" property="status" />
+      <id column="creatorId" jdbcType="BIGINT" property="creatorId" />
+      <id column="creater" jdbcType="VARCHAR" property="creater" />
+      <id column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+      <id column="reviser" jdbcType="VARCHAR" property="reviser" />
+      <id column="reviseTime" jdbcType="TIMESTAMP" property="reviseTime" />
+      <id column="usageCount" jdbcType="INTEGER" property="usageCount" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      modelItemName, modelItemType, status, creatorId, creater, createTime, reviser, reviseTime, usageCount
+  </sql>
+
+<!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_teaching_model_item
+       where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_teaching_model_item
+       where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.teaching.entity.TeachingModelItem">
+    insert into t_teaching_model_item (modelItemName, modelItemType, status, creatorId, creater, createTime, reviser, reviseTime, usageCount)
+    values (
+         #{modelItemName,jdbcType=VARCHAR},
+         #{modelItemType,jdbcType=VARCHAR},
+         #{status,jdbcType=TINYINT},
+         #{creatorId,jdbcType=BIGINT},
+         #{creater,jdbcType=VARCHAR},
+         #{createTime,jdbcType=TIMESTAMP},
+         #{reviser,jdbcType=VARCHAR},
+         #{reviseTime,jdbcType=TIMESTAMP},
+        #{usageCount,jdbcType=INTEGER}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.teaching.entity.TeachingModelItem">
+    insert into t_teaching_model_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="modelItemName != null">
+        modelItemName,
+      </if>
+      <if test="modelItemType != null">
+        modelItemType,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creatorId != null">
+        creatorId,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="reviser != null">
+        reviser,
+      </if>
+      <if test="reviseTime != null">
+        reviseTime,
+      </if>
+      <if test="usageCount != null">
+        usageCount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="modelItemName != null">
+       #{modelItemName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="modelItemType != null">
+       #{modelItemType,jdbcType=VARCHAR},
+      </if>
+
+      <if test="status != null">
+       #{status,jdbcType=TINYINT},
+      </if>
+
+      <if test="creatorId != null">
+       #{creatorId,jdbcType=BIGINT},
+      </if>
+
+      <if test="creater != null">
+       #{creater,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createTime != null">
+       #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="reviser != null">
+       #{reviser,jdbcType=VARCHAR},
+      </if>
+
+      <if test="reviseTime != null">
+       #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="usageCount != null">
+       #{usageCount,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.teaching.entity.TeachingModelItem">
+    update t_teaching_model_item
+    <set>
+       <if test="modelItemName != null">
+         modelItemName = #{modelItemName,jdbcType=VARCHAR},
+      </if>
+       <if test="modelItemType != null">
+         modelItemType = #{modelItemType,jdbcType=VARCHAR},
+      </if>
+       <if test="status != null">
+         status = #{status,jdbcType=TINYINT},
+      </if>
+       <if test="creatorId != null">
+         creatorId = #{creatorId,jdbcType=BIGINT},
+      </if>
+       <if test="creater != null">
+         creater = #{creater,jdbcType=VARCHAR},
+      </if>
+       <if test="createTime != null">
+         createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="reviser != null">
+         reviser = #{reviser,jdbcType=VARCHAR},
+      </if>
+       <if test="reviseTime != null">
+         reviseTime = #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="usageCount != null">
+         usageCount = #{usageCount,jdbcType=INTEGER},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.teaching.entity.TeachingModelItem">
+    update t_teaching_model_item
+    set
+        modelItemName = #{modelItemName,jdbcType=VARCHAR},
+        modelItemType = #{modelItemType,jdbcType=VARCHAR},
+        status = #{status,jdbcType=TINYINT},
+        creatorId = #{creatorId,jdbcType=BIGINT},
+        creater = #{creater,jdbcType=VARCHAR},
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+        reviser = #{reviser,jdbcType=VARCHAR},
+        reviseTime = #{reviseTime,jdbcType=TIMESTAMP},
+        usageCount = #{usageCount,jdbcType=INTEGER},
+
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+</mapper>

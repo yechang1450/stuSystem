@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.studentgrade.mapper.StudentGradeMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.studentgrade.entity.StudentGrade">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="studentNo" jdbcType="BIGINT" property="studentNo" />
+      <id column="courseNo" jdbcType="BIGINT" property="courseNo" />
+      <id column="score" jdbcType="BIGINT" property="score" />
+      <id column="scorelevel" jdbcType="INTEGER" property="scorelevel" />
+      <id column="appraise" jdbcType="VARCHAR" property="appraise" />
+      <id column="usualGrades" jdbcType="DOUBLE" property="usualGrades" />
+      <id column="usualWeight" jdbcType="DOUBLE" property="usualWeight" />
+      <id column="testGrades" jdbcType="DOUBLE" property="testGrades" />
+      <id column="testWeight" jdbcType="DOUBLE" property="testWeight" />
+      <id column="grade" jdbcType="DOUBLE" property="grade" />
+      <id column="isHang" jdbcType="TINYINT" property="isHang" />
+      <id column="classNo" jdbcType="VARCHAR" property="classNo" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      studentNo, courseNo, score, scorelevel, appraise, usualGrades, usualWeight, testGrades, testWeight, grade, isHang, classNo
+  </sql>
+    <select id="selectPageInfo" resultType="com.heaboy.service.studentgrade.entity.StudentGradeVo">
+        select
+        t_student_grade.*,t_student.studentName,t_class_name.className,t_course.courseName
+        from t_student_grade,t_class_name,t_course,t_student,t_class_course_rule
+        where
+        t_student_grade.courseNo = t_course.courseNo
+        and t_student_grade.studentNo = t_student.studentNo
+        and t_student_grade.classNo = t_class_name.classNo
+        and t_student_grade.classNo = t_class_course_rule.classNo
+        and t_student_grade.courseNo = t_class_course_rule.courseNo
+        and t_class_course_rule.teachersNos like concat('%',#{userName},'%')
+        <if test="studentGrade.studentNo != null">
+            and t_student_grade.studentNo = #{studentGrade.studentNo}
+        </if>
+        <if test="studentGrade.courseNo != null">
+            and t_student_grade.courseNo = #{studentGrade.courseNo}
+        </if>
+        <if test="studentGrade.scorelevel != null">
+            and t_student_grade.scorelevel = #{studentGrade.scorelevel}
+        </if>
+        <if test="studentGrade.grade != null">
+            and t_student_grade.grade = #{studentGrade.grade}
+        </if>
+        <if test="studentGrade.isHang != null">
+            and t_student_grade.isHang = #{studentGrade.isHang}
+        </if>
+        <if test="studentGrade.classNo != null and classNo != ''">
+            and t_student_grade.classNo = #{studentGrade.classNo}
+        </if>
+
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student_grade
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_student_grade
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.studentgrade.entity.StudentGrade">
+    insert into t_student_grade (studentNo, courseNo, score, scorelevel, appraise, usualGrades, usualWeight, testGrades, testWeight, grade, isHang, classNo)
+    values (
+         #{studentNo,jdbcType=BIGINT},
+         #{courseNo,jdbcType=BIGINT},
+         #{score,jdbcType=BIGINT},
+         #{scorelevel,jdbcType=INTEGER},
+         #{appraise,jdbcType=VARCHAR},
+         #{usualGrades,jdbcType=DOUBLE},
+         #{usualWeight,jdbcType=DOUBLE},
+         #{testGrades,jdbcType=DOUBLE},
+         #{testWeight,jdbcType=DOUBLE},
+         #{grade,jdbcType=DOUBLE},
+         #{isHang,jdbcType=TINYINT},
+        #{classNo,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.studentgrade.entity.StudentGrade">
+    insert into t_student_grade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        studentNo,
+      </if>
+      <if test="courseNo != null">
+        courseNo,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="scorelevel != null">
+        scorelevel,
+      </if>
+      <if test="appraise != null">
+        appraise,
+      </if>
+      <if test="usualGrades != null">
+        usualGrades,
+      </if>
+      <if test="usualWeight != null">
+        usualWeight,
+      </if>
+      <if test="testGrades != null">
+        testGrades,
+      </if>
+      <if test="testWeight != null">
+        testWeight,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="isHang != null">
+        isHang,
+      </if>
+      <if test="classNo != null">
+        classNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="studentNo != null">
+       #{studentNo,jdbcType=BIGINT},
+      </if>
+
+      <if test="courseNo != null">
+       #{courseNo,jdbcType=BIGINT},
+      </if>
+
+      <if test="score != null">
+       #{score,jdbcType=BIGINT},
+      </if>
+
+      <if test="scorelevel != null">
+       #{scorelevel,jdbcType=INTEGER},
+      </if>
+
+      <if test="appraise != null">
+       #{appraise,jdbcType=VARCHAR},
+      </if>
+
+      <if test="usualGrades != null">
+       #{usualGrades,jdbcType=DOUBLE},
+      </if>
+
+      <if test="usualWeight != null">
+       #{usualWeight,jdbcType=DOUBLE},
+      </if>
+
+      <if test="testGrades != null">
+       #{testGrades,jdbcType=DOUBLE},
+      </if>
+
+      <if test="testWeight != null">
+       #{testWeight,jdbcType=DOUBLE},
+      </if>
+
+      <if test="grade != null">
+       #{grade,jdbcType=DOUBLE},
+      </if>
+
+      <if test="isHang != null">
+       #{isHang,jdbcType=TINYINT},
+      </if>
+
+      <if test="classNo != null">
+       #{classNo,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.studentgrade.entity.StudentGrade">
+    update t_student_grade
+    <set>
+       <if test="studentNo != null">
+         studentNo = #{studentNo,jdbcType=BIGINT},
+      </if>
+       <if test="courseNo != null">
+         courseNo = #{courseNo,jdbcType=BIGINT},
+      </if>
+       <if test="score != null">
+         score = #{score,jdbcType=BIGINT},
+      </if>
+       <if test="scorelevel != null">
+         scorelevel = #{scorelevel,jdbcType=INTEGER},
+      </if>
+       <if test="appraise != null">
+         appraise = #{appraise,jdbcType=VARCHAR},
+      </if>
+       <if test="usualGrades != null">
+         usualGrades = #{usualGrades,jdbcType=DOUBLE},
+      </if>
+       <if test="usualWeight != null">
+         usualWeight = #{usualWeight,jdbcType=DOUBLE},
+      </if>
+       <if test="testGrades != null">
+         testGrades = #{testGrades,jdbcType=DOUBLE},
+      </if>
+       <if test="testWeight != null">
+         testWeight = #{testWeight,jdbcType=DOUBLE},
+      </if>
+       <if test="grade != null">
+         grade = #{grade,jdbcType=DOUBLE},
+      </if>
+       <if test="isHang != null">
+         isHang = #{isHang,jdbcType=TINYINT},
+      </if>
+       <if test="classNo != null">
+         classNo = #{classNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.studentgrade.entity.StudentGrade">
+    update t_student_grade
+    set
+        studentNo = #{studentNo,jdbcType=BIGINT},
+        courseNo = #{courseNo,jdbcType=BIGINT},
+        score = #{score,jdbcType=BIGINT},
+        scorelevel = #{scorelevel,jdbcType=INTEGER},
+        appraise = #{appraise,jdbcType=VARCHAR},
+        usualGrades = #{usualGrades,jdbcType=DOUBLE},
+        usualWeight = #{usualWeight,jdbcType=DOUBLE},
+        testGrades = #{testGrades,jdbcType=DOUBLE},
+        testWeight = #{testWeight,jdbcType=DOUBLE},
+        grade = #{grade,jdbcType=DOUBLE},
+        isHang = #{isHang,jdbcType=TINYINT},
+        classNo = #{classNo,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

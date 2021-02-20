@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.planitem.mapper.PlanItemMapper">
+    <resultMap id="BaseResultMap" type="com.heaboy.service.planitem.entity.PlanItem">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="userNo" jdbcType="VARCHAR" property="userNo"/>
+        <result column="item" jdbcType="VARCHAR" property="item"/>
+        <result column="startTime" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="endTime" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="priority" jdbcType="INTEGER" property="priority"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="itemTitle" jdbcType="VARCHAR" property="itemTitle"/>
+        <result column="itemType" jdbcType="INTEGER" property="itemType"/>
+        <result column="parentId" jdbcType="BIGINT" property="parentId"/>
+        <result column="deleteFlag" jdbcType="TINYINT" property="deleteFlag"/>
+        <result column="creatorId" jdbcType="BIGINT" property="creatorId"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <collection property="childPlanItems" column="id" ofType="com.heaboy.service.planitem.entity.PlanItem"
+                    select="selectPlanItemsByParentId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+              id,
+      userNo, item, startTime, endTime, priority, status, itemTitle, itemType, parentId, deleteFlag, creatorId, createTime
+  </sql>
+    <select id="selectAll" parameterType="com.heaboy.service.planitem.entity.PlanItem" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_plan_item
+        where 1=1
+        <if test="planItem.userNo != null and planItem.userNo != ''">
+            and userNo like '%${planItem.userNo}%'
+        </if>
+        <if test="planItem.status != null">
+            and status = #{planItem.status}
+        </if>
+        <if test="planItem.priority != null">
+            and priority = #{planItem.priority}
+        </if>
+        <if test="planItem.itemType != null">
+            and itemType = #{planItem.itemType}
+        </if>
+        <if test="planItem.deleteFlag != null">
+            and deleteFlag = #{planItem.deleteFlag}
+        </if>
+        and parentId = #{planItem.parentId}
+        ORDER BY
+        priority DESC,
+        startTime ASC
+    </select>
+    <select id="selectTodayItem" parameterType="com.heaboy.service.planitem.entity.PlanItem" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_plan_item
+        where 1=1
+        <if test="planItem.userNo != null and planItem.userNo != ''">
+            and userNo like '%${planItem.userNo}%'
+        </if>
+        <if test="planItem.status != null">
+            and status = #{planItem.status}
+        </if>
+        <if test="planItem.priority != null">
+            and priority = #{planItem.priority}
+        </if>
+        <if test="planItem.itemType != null">
+            and itemType = #{planItem.itemType}
+        </if>
+        <if test="planItem.deleteFlag != null">
+            and deleteFlag = #{planItem.deleteFlag}
+        </if>
+        and parentId = #{planItem.parentId}
+        and to_days(startTime) &lt;= to_days(curdate())
+        ORDER BY
+        priority DESC,
+        startTime ASC
+    </select>
+    <select id="selectPlanItemsByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        t_plan_item.id as id,
+        t_plan_item.userNo as userNo,
+        t_plan_item.item as item,
+        t_plan_item.startTime as startTime,
+        t_plan_item.endTime as endTime,
+        t_plan_item.priority as priority,
+        t_plan_item.status as status,
+        t_plan_item.itemTitle as itemTitle,
+        t_plan_item.itemType as itemType,
+        t_plan_item.parentId as parentId,
+        t_plan_item.deleteFlag as deleteFlag,
+        t_plan_item.creatorId as creatorId,
+        t_plan_item.createTime as createTime,
+        t_plan_item.parentId as parentId
+        FROM
+        t_plan_item
+        where parentId = #{id} order by priority desc
+  </select>
+</mapper>

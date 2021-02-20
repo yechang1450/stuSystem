@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.student.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.student.entity.Student">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="studentNo" jdbcType="VARCHAR" property="studentNo" />
+      <id column="studentName" jdbcType="VARCHAR" property="studentName" />
+      <id column="classNo" jdbcType="BIGINT" property="classNo" />
+      <id column="sex" jdbcType="INTEGER" property="sex" />
+      <id column="phoneNumber" jdbcType="VARCHAR" property="phoneNumber" />
+      <id column="stageId" jdbcType="INTEGER" property="stageId" />
+      <id column="status" jdbcType="INTEGER" property="status" />
+      <id column="recommendCode" jdbcType="VARCHAR" property="recommendCode" />
+      <id column="selfrecommendCode" jdbcType="VARCHAR" property="selfrecommendCode" />
+      <id column="lateTimes" jdbcType="INTEGER" property="lateTimes" />
+      <id column="truancyTimes" jdbcType="INTEGER" property="truancyTimes" />
+      <id column="workplace" jdbcType="VARCHAR" property="workplace" />
+      <id column="personalSignature" jdbcType="VARCHAR" property="personalSignature" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      studentNo, studentName, classNo, sex, phoneNumber, stageId, status, recommendCode, selfrecommendCode, lateTimes, truancyTimes, workplace, personalSignature
+  </sql>
+    <select id="selectByClassNo" resultType="com.heaboy.service.student.entity.Student">
+        select
+            studentNo,studentName
+        from
+            t_student
+        where
+           classNo = #{classNo}
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student
+       where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_student
+       where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.student.entity.Student">
+    insert into t_student (studentNo, studentName, classNo, sex, phoneNumber, stageId, status, recommendCode, selfrecommendCode, lateTimes, truancyTimes, workplace, personalSignature)
+    values (
+         #{studentNo,jdbcType=VARCHAR},
+         #{studentName,jdbcType=VARCHAR},
+         #{classNo,jdbcType=BIGINT},
+         #{sex,jdbcType=INTEGER},
+         #{phoneNumber,jdbcType=VARCHAR},
+         #{stageId,jdbcType=INTEGER},
+         #{status,jdbcType=INTEGER},
+         #{recommendCode,jdbcType=VARCHAR},
+         #{selfrecommendCode,jdbcType=VARCHAR},
+         #{lateTimes,jdbcType=INTEGER},
+         #{truancyTimes,jdbcType=INTEGER},
+         #{workplace,jdbcType=VARCHAR},
+        #{personalSignature,jdbcType=VARCHAR}
+    )
+  </insert>
+-->
+    <!--插入学生信息返回主键-->
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.heaboy.service.student.entity.Student">
+    insert into t_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        studentNo,
+      </if>
+      <if test="studentName != null">
+        studentName,
+      </if>
+      <if test="classNo != null">
+        classNo,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phoneNumber != null">
+        phoneNumber,
+      </if>
+      <if test="stageId != null">
+        stageId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="recommendCode != null">
+        recommendCode,
+      </if>
+      <if test="selfrecommendCode != null">
+        selfrecommendCode,
+      </if>
+      <if test="lateTimes != null">
+        lateTimes,
+      </if>
+      <if test="truancyTimes != null">
+        truancyTimes,
+      </if>
+      <if test="workplace != null">
+        workplace,
+      </if>
+      <if test="personalSignature != null">
+        personalSignature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="studentNo != null">
+       #{studentNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="studentName != null">
+       #{studentName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="classNo != null">
+       #{classNo,jdbcType=BIGINT},
+      </if>
+
+      <if test="sex != null">
+       #{sex,jdbcType=INTEGER},
+      </if>
+
+      <if test="phoneNumber != null">
+       #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+
+      <if test="stageId != null">
+       #{stageId,jdbcType=INTEGER},
+      </if>
+
+      <if test="status != null">
+       #{status,jdbcType=INTEGER},
+      </if>
+
+      <if test="recommendCode != null">
+       #{recommendCode,jdbcType=VARCHAR},
+      </if>
+
+      <if test="selfrecommendCode != null">
+       #{selfrecommendCode,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lateTimes != null">
+       #{lateTimes,jdbcType=INTEGER},
+      </if>
+
+      <if test="truancyTimes != null">
+       #{truancyTimes,jdbcType=INTEGER},
+      </if>
+
+      <if test="workplace != null">
+       #{workplace,jdbcType=VARCHAR},
+      </if>
+
+      <if test="personalSignature != null">
+       #{personalSignature,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+    <!--
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.student.entity.Student">
+    update t_student
+    <set>
+       <if test="studentNo != null">
+         studentNo = #{studentNo,jdbcType=VARCHAR},
+      </if>
+       <if test="studentName != null">
+         studentName = #{studentName,jdbcType=VARCHAR},
+      </if>
+       <if test="classNo != null">
+         classNo = #{classNo,jdbcType=BIGINT},
+      </if>
+       <if test="sex != null">
+         sex = #{sex,jdbcType=INTEGER},
+      </if>
+       <if test="phoneNumber != null">
+         phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+       <if test="stageId != null">
+         stageId = #{stageId,jdbcType=INTEGER},
+      </if>
+       <if test="status != null">
+         status = #{status,jdbcType=INTEGER},
+      </if>
+       <if test="recommendCode != null">
+         recommendCode = #{recommendCode,jdbcType=VARCHAR},
+      </if>
+       <if test="selfrecommendCode != null">
+         selfrecommendCode = #{selfrecommendCode,jdbcType=VARCHAR},
+      </if>
+       <if test="lateTimes != null">
+         lateTimes = #{lateTimes,jdbcType=INTEGER},
+      </if>
+       <if test="truancyTimes != null">
+         truancyTimes = #{truancyTimes,jdbcType=INTEGER},
+      </if>
+       <if test="workplace != null">
+         workplace = #{workplace,jdbcType=VARCHAR},
+      </if>
+       <if test="personalSignature != null">
+         personalSignature = #{personalSignature,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.student.entity.Student">
+    update t_student
+    set
+        studentNo = #{studentNo,jdbcType=VARCHAR},
+        studentName = #{studentName,jdbcType=VARCHAR},
+        classNo = #{classNo,jdbcType=BIGINT},
+        sex = #{sex,jdbcType=INTEGER},
+        phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+        stageId = #{stageId,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER},
+        recommendCode = #{recommendCode,jdbcType=VARCHAR},
+        selfrecommendCode = #{selfrecommendCode,jdbcType=VARCHAR},
+        lateTimes = #{lateTimes,jdbcType=INTEGER},
+        truancyTimes = #{truancyTimes,jdbcType=INTEGER},
+        workplace = #{workplace,jdbcType=VARCHAR},
+        personalSignature = #{personalSignature,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=BIGINT}
+  </update>
+-->
+</mapper>

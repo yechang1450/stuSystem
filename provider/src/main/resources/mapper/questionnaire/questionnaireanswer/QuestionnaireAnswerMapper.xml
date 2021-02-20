@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.questionnaire.mapper.QuestionnaireAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.questionnaire.entity.QuestionnaireAnswer">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="userId" jdbcType="BIGINT" property="userId" />
+      <id column="questionnaireId" jdbcType="BIGINT" property="questionnaireId" />
+      <id column="questionId" jdbcType="BIGINT" property="questionId" />
+      <id column="answer" jdbcType="VARCHAR" property="answer" />
+      <id column="operateTime" jdbcType="DECIMAL" property="operateTime" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      userId, questionnaireId, questionId, answer, operateTime
+  </sql>
+    <insert id="answerQuestionnaire">
+        insert into t_questionnaire_answer
+        (userId, questionnaireId, questionId, answer, operateTime)
+        values
+        <foreach collection="questionnaireAnswerList" item="questionnaireAnswer" separator=",">
+        (#{questionnaireAnswer.userId},#{questionnaireAnswer.questionnaireId},#{questionnaireAnswer.questionId},#{questionnaireAnswer.answer},#{questionnaireAnswer.operateTime})
+        </foreach>
+    </insert>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_questionnaire_answer
+       where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_questionnaire_answer
+       where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireAnswer">
+    insert into t_questionnaire_answer (userId, questionnaireId, questionId, answer, operateTime)
+    values (
+         #{userId,jdbcType=BIGINT},
+         #{questionnaireId,jdbcType=BIGINT},
+         #{questionId,jdbcType=BIGINT},
+         #{answer,jdbcType=VARCHAR},
+        #{operateTime,jdbcType=DECIMAL}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireAnswer">
+    insert into t_questionnaire_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="questionnaireId != null">
+        questionnaireId,
+      </if>
+      <if test="questionId != null">
+        questionId,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="operateTime != null">
+        operateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="userId != null">
+       #{userId,jdbcType=BIGINT},
+      </if>
+
+      <if test="questionnaireId != null">
+       #{questionnaireId,jdbcType=BIGINT},
+      </if>
+
+      <if test="questionId != null">
+       #{questionId,jdbcType=BIGINT},
+      </if>
+
+      <if test="answer != null">
+       #{answer,jdbcType=VARCHAR},
+      </if>
+
+      <if test="operateTime != null">
+       #{operateTime,jdbcType=DECIMAL},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireAnswer">
+    update t_questionnaire_answer
+    <set>
+       <if test="userId != null">
+         userId = #{userId,jdbcType=BIGINT},
+      </if>
+       <if test="questionnaireId != null">
+         questionnaireId = #{questionnaireId,jdbcType=BIGINT},
+      </if>
+       <if test="questionId != null">
+         questionId = #{questionId,jdbcType=BIGINT},
+      </if>
+       <if test="answer != null">
+         answer = #{answer,jdbcType=VARCHAR},
+      </if>
+       <if test="operateTime != null">
+         operateTime = #{operateTime,jdbcType=DECIMAL},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireAnswer">
+    update t_questionnaire_answer
+    set
+        userId = #{userId,jdbcType=BIGINT},
+        questionnaireId = #{questionnaireId,jdbcType=BIGINT},
+        questionId = #{questionId,jdbcType=BIGINT},
+        answer = #{answer,jdbcType=VARCHAR},
+        operateTime = #{operateTime,jdbcType=DECIMAL},
+
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+</mapper>

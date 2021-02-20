@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaboy.provider.questionnaire.mapper.QuestionnaireOptionMapper">
+  <resultMap id="BaseResultMap" type="com.heaboy.service.questionnaire.entity.QuestionnaireOption">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="optionId" jdbcType="BIGINT" property="optionId" />
+      <id column="questionId" jdbcType="BIGINT" property="questionId" />
+      <id column="questionnaireId" jdbcType="BIGINT" property="questionnaireId" />
+      <id column="optionContent" jdbcType="VARCHAR" property="optionContent" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      optionId, questionId, questionnaireId, optionContent
+  </sql>
+
+    <insert id="insert" parameterType="java.util.List">
+        insert into t_questionnaire_option(optionId,questionId,questionnaireId,optionContent)
+        values
+        <foreach collection="list" item="items" index="index" separator=",">
+            (
+            #{items.optionId},
+            #{items.questionId},
+            #{items.questionnaireId},
+            #{items.optionContent}
+            )
+        </foreach>
+    </insert>
+    <insert id="InsertQuestionOption">
+        insert into t_questionnaire_option(optionId,questionId,questionnaireId,optionContent)
+        values
+        (#{questionnaireOption.optionId},#{questionnaireOption.questionId},#{questionnaireOption.questionnaireId},#{questionnaireOption.optionContent})
+    </insert>
+
+    <update id="updateQuestionOption">
+        update t_questionnaire_option set optionContent = #{questionnaireOption.optionContent}
+        where questionId = #{questionnaireOption.questionId}
+        and questionnaireId = #{questionnaireOption.questionnaireId}
+        and optionId = #{questionnaireOption.optionId}
+    </update>
+    <delete id="deleteOption">
+        delete from t_questionnaire_option where questionId = #{questionId} and questionnaireId = #{questionnaireId}
+    </delete>
+
+
+    <delete id="deleteQuestionOption">
+        delete from t_questionnaire_option where questionId = #{questionnaireOption.questionId}
+        and questionnaireId = #{questionnaireOption.questionnaireId}
+        and optionId = #{questionnaireOption.optionId}
+    </delete>
+    <select id="selectOptions" resultMap="BaseResultMap">
+        select * from t_questionnaire_option where questionId = #{questionId} and questionnaireId = #{questionnaireId}
+    </select>
+
+    <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
+<!--
+ <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_questionnaire_option
+       where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from  t_questionnaire_option
+       where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireOption">
+    insert into t_questionnaire_option (optionId, questionId, questionnaireId, optionContent)
+    values (
+         #{optionId,jdbcType=BIGINT},
+         #{questionId,jdbcType=BIGINT},
+         #{questionnaireId,jdbcType=BIGINT},
+        #{optionContent,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireOption">
+    insert into t_questionnaire_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="optionId != null">
+        optionId,
+      </if>
+      <if test="questionId != null">
+        questionId,
+      </if>
+      <if test="questionnaireId != null">
+        questionnaireId,
+      </if>
+      <if test="optionContent != null">
+        optionContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="optionId != null">
+       #{optionId,jdbcType=BIGINT},
+      </if>
+
+      <if test="questionId != null">
+       #{questionId,jdbcType=BIGINT},
+      </if>
+
+      <if test="questionnaireId != null">
+       #{questionnaireId,jdbcType=BIGINT},
+      </if>
+
+      <if test="optionContent != null">
+       #{optionContent,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireOption">
+    update t_questionnaire_option
+    <set>
+       <if test="optionId != null">
+         optionId = #{optionId,jdbcType=BIGINT},
+      </if>
+       <if test="questionId != null">
+         questionId = #{questionId,jdbcType=BIGINT},
+      </if>
+       <if test="questionnaireId != null">
+         questionnaireId = #{questionnaireId,jdbcType=BIGINT},
+      </if>
+       <if test="optionContent != null">
+         optionContent = #{optionContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heaboy.service.questionnaire.entity.QuestionnaireOption">
+    update t_questionnaire_option
+    set
+        optionId = #{optionId,jdbcType=BIGINT},
+        questionId = #{questionId,jdbcType=BIGINT},
+        questionnaireId = #{questionnaireId,jdbcType=BIGINT},
+        optionContent = #{optionContent,jdbcType=VARCHAR},
+
+       where id = #{id,jdbcType=INTEGER}
+  </update>
+-->
+</mapper>
